@@ -14,7 +14,7 @@ export default function App() {
     {
       key: '1',
       description: 'Finish portfolio homepage',
-      completed: false,
+      completed: true,
       date: 'Mar 4',
     },
     {
