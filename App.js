@@ -79,7 +79,7 @@ const addTask = () => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.taskCard}>
-        <View style={styles.taskTopRow}>
+        <View style={styles.taskTopRow} pointerEvents="box-none">
           <CheckBox
             checked={item.completed}
             onPress={() => toggleTask(item.key)}
