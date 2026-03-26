@@ -14,7 +14,7 @@ export default function App() {
     {
       key: '1',
       description: 'Finish portfolio homepage',
-      completed: true,
+      completed: false,
       date: 'Mar 4',
     },
     {
@@ -44,7 +44,6 @@ export default function App() {
 
   const addTask = () => {
     const trimmedTask = newTask.trim();
-
     if (!trimmedTask) return;
 
     const today = new Date();
@@ -65,18 +64,31 @@ export default function App() {
   };
 
   const filteredTasks = useMemo(() => {
+    let visibleTasks = tasks;
+
     if (filter === 'Active') {
-      return tasks.filter((task) => !task.completed);
+      visibleTasks = tasks.filter((task) => !task.completed);
+    } else if (filter === 'Completed') {
+      visibleTasks = tasks.filter((task) => task.completed);
     }
 
-    if (filter === 'Completed') {
-      return tasks.filter((task) => task.completed);
-    }
-
-    return tasks;
+    return [
+      {
+        key: 'spacer-row',
+        description: '',
+        completed: false,
+        date: '',
+        isSpacer: true,
+      },
+      ...visibleTasks,
+    ];
   }, [tasks, filter]);
 
   const renderItem = ({ item }) => {
+    if (item.isSpacer) {
+      return <View style={{ height: 6 }} />;
+    }
+
     return (
       <View style={styles.taskCard}>
         <CheckBox
