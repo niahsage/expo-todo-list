@@ -64,67 +64,66 @@ export default function App() {
   };
 
   const filteredTasks = useMemo(() => {
-    let visibleTasks = tasks;
-
     if (filter === 'Active') {
-      visibleTasks = tasks.filter((task) => !task.completed);
-    } else if (filter === 'Completed') {
-      visibleTasks = tasks.filter((task) => task.completed);
+      return tasks.filter((task) => !task.completed);
     }
 
-    return [
-      {
-        key: 'spacer-row',
-        description: '',
-        completed: false,
-        date: '',
-        isSpacer: true,
-      },
-      ...visibleTasks,
-    ];
+    if (filter === 'Completed') {
+      return tasks.filter((task) => task.completed);
+    }
+
+    return tasks;
   }, [tasks, filter]);
 
   const renderItem = ({ item }) => {
-    if (item.isSpacer) {
-      return <View style={{ height: 6 }} />;
-    }
-
     return (
       <View style={styles.taskCard}>
-        <CheckBox
-          title={item.description}
-          checked={item.completed}
-          onPress={() => toggleTask(item.key)}
-          checkedColor="#6f8466"
-          uncheckedColor="#b8b8b8"
-          containerStyle={styles.taskCheckRow}
-          textStyle={[
-            styles.taskText,
-            item.completed && styles.completedTaskText,
-          ]}
-        />
+        <View style={styles.taskRow}>
+          <CheckBox
+            checked={item.completed}
+            onPress={() => toggleTask(item.key)}
+            containerStyle={styles.checkboxContainer}
+            checkedIcon={
+              <View style={styles.checkedBox}>
+                <Text style={styles.checkMark}>✓</Text>
+              </View>
+            }
+            uncheckedIcon={<View style={styles.uncheckedBox} />}
+          />
 
-        <View style={styles.pillRow}>
-          <View style={styles.datePill}>
-            <Text style={styles.pillText}>📅 {item.date}</Text>
-          </View>
-
-          <View
-            style={[
-              styles.statusPill,
-              item.completed ? styles.completedPill : styles.activePill,
-            ]}
-          >
+          <View style={styles.taskContent}>
             <Text
               style={[
-                styles.pillText,
-                item.completed
-                  ? styles.completedPillText
-                  : styles.activePillText,
+                styles.taskText,
+                item.completed && styles.completedTaskText,
               ]}
             >
-              {item.completed ? '✓ Completed' : 'Active'}
+              {item.description}
             </Text>
+
+            <View style={styles.pillRow}>
+              <View style={styles.datePill}>
+                <Text style={styles.pillText}>📅 {item.date}</Text>
+              </View>
+
+              <View
+                style={[
+                  styles.statusPill,
+                  item.completed ? styles.completedPill : styles.activePill,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.pillText,
+                    item.completed
+                      ? styles.completedPillText
+                      : styles.activePillText,
+                  ]}
+                >
+                  {item.completed ? '✓ Completed' : 'Active'}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -315,17 +314,50 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e7dacb',
   },
-  taskCheckRow: {
+  taskRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  checkboxContainer: {
     padding: 0,
     margin: 0,
-    marginBottom: 12,
+    marginRight: 12,
+    marginTop: 2,
     backgroundColor: 'transparent',
     borderWidth: 0,
+  },
+  uncheckedBox: {
+    width: 26,
+    height: 26,
+    borderWidth: 2,
+    borderColor: '#b8b8b8',
+    borderRadius: 4,
+    backgroundColor: 'transparent',
+  },
+  checkedBox: {
+    width: 26,
+    height: 26,
+    borderWidth: 2,
+    borderColor: '#6f8466',
+    borderRadius: 4,
+    backgroundColor: '#f1f5ec',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkMark: {
+    color: '#6f8466',
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 18,
+  },
+  taskContent: {
+    flex: 1,
   },
   taskText: {
     fontSize: 18,
     fontWeight: '700',
     color: '#342922',
+    marginBottom: 12,
   },
   completedTaskText: {
     textDecorationLine: 'line-through',
@@ -336,7 +368,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    marginLeft: 40,
   },
   datePill: {
     backgroundColor: '#f7e6df',
