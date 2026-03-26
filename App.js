@@ -122,100 +122,97 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrap}>
+        <View style={styles.brandRow}>
+          <Text style={styles.sunIcon}>☼</Text>
+          <View>
+            <Text style={styles.brandTitle}>Daylist</Text>
+            <Text style={styles.brandSubtitle}>
+              gentle reminders for your day
+            </Text>
+          </View>
+        </View>
+
+        <Text style={styles.sectionLabel}>TODAY</Text>
+
+        <View style={styles.inputCard}>
+          <Input
+            placeholder="Add a new task"
+            value={newTask}
+            onChangeText={setNewTask}
+            onSubmitEditing={addTask}
+            containerStyle={styles.inputWrapper}
+            inputContainerStyle={styles.inputContainer}
+            inputStyle={styles.inputText}
+          />
+          <Button
+            title="Add"
+            onPress={addTask}
+            buttonStyle={styles.addButton}
+            titleStyle={styles.addButtonText}
+          />
+        </View>
+
         <FlatList
           data={filteredTasks}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
           extraData={tasks}
           contentContainerStyle={styles.listContent}
-          ListHeaderComponent={
-            <>
-              <View style={styles.brandRow}>
-                <Text style={styles.sunIcon}>☼</Text>
-                <View>
-                  <Text style={styles.brandTitle}>Daylist</Text>
-                  <Text style={styles.brandSubtitle}>
-                    gentle reminders for your day
-                  </Text>
-                </View>
-              </View>
-
-              <Text style={styles.sectionLabel}>TODAY</Text>
-
-              <View style={styles.inputCard}>
-                <Input
-                  placeholder="Add a new task"
-                  value={newTask}
-                  onChangeText={setNewTask}
-                  onSubmitEditing={addTask}
-                  containerStyle={styles.inputWrapper}
-                  inputContainerStyle={styles.inputContainer}
-                  inputStyle={styles.inputText}
-                />
-                <Button
-                  title="Add"
-                  onPress={addTask}
-                  buttonStyle={styles.addButton}
-                  titleStyle={styles.addButtonText}
-                />
-              </View>
-            </>
-          }
-          ListFooterComponent={
-            <View style={styles.filterBar}>
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  filter === 'All' && styles.filterButtonActive,
-                ]}
-                onPress={() => setFilter('All')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    filter === 'All' && styles.filterTextActive,
-                  ]}
-                >
-                  All
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  filter === 'Active' && styles.filterButtonActive,
-                ]}
-                onPress={() => setFilter('Active')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    filter === 'Active' && styles.filterTextActive,
-                  ]}
-                >
-                  Active
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  filter === 'Completed' && styles.filterButtonActive,
-                ]}
-                onPress={() => setFilter('Completed')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    filter === 'Completed' && styles.filterTextActive,
-                  ]}
-                >
-                  Completed
-                </Text>
-              </TouchableOpacity>
-            </View>
-          }
+          removeClippedSubviews={false}
         />
+
+        <View style={styles.filterBar}>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              filter === 'All' && styles.filterButtonActive,
+            ]}
+            onPress={() => setFilter('All')}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                filter === 'All' && styles.filterTextActive,
+              ]}
+            >
+              All
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              filter === 'Active' && styles.filterButtonActive,
+            ]}
+            onPress={() => setFilter('Active')}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                filter === 'Active' && styles.filterTextActive,
+              ]}
+            >
+              Active
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              filter === 'Completed' && styles.filterButtonActive,
+            ]}
+            onPress={() => setFilter('Completed')}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                filter === 'Completed' && styles.filterTextActive,
+              ]}
+            >
+              Completed
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -296,7 +293,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   listContent: {
-    paddingBottom: 28,
+    paddingBottom: 18,
   },
   taskCard: {
     backgroundColor: '#fbf8f4',
