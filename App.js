@@ -42,27 +42,27 @@ export default function App() {
     );
   };
 
-const addTask = () => {
-  const trimmedTask = newTask.trim();
+  const addTask = () => {
+    const trimmedTask = newTask.trim();
 
-  if (!trimmedTask) return;
+    if (!trimmedTask) return;
 
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  });
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    });
 
-  const taskToAdd = {
-    key: Date.now().toString(),
-    description: trimmedTask,
-    completed: false,
-    date: formattedDate,
+    const taskToAdd = {
+      key: Date.now().toString(),
+      description: trimmedTask,
+      completed: false,
+      date: formattedDate,
+    };
+
+    setTasks((prevTasks) => [taskToAdd, ...prevTasks]);
+    setNewTask('');
   };
-
-  setTasks((prevTasks) => [taskToAdd, ...prevTasks]);
-  setNewTask('');
-};
 
   const filteredTasks = useMemo(() => {
     if (filter === 'Active') {
@@ -79,14 +79,14 @@ const addTask = () => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.taskCard}>
-        <View style={styles.taskTopRow} 
-<CheckBox
-  key={item.key}
-  checked={item.completed}
-  onPress={() => toggleTask(item.key)}
-  checkedColor="#6f8466"
-  containerStyle={styles.checkboxContainer}
-/>
+        <View style={styles.taskTopRow}>
+          <CheckBox
+            key={item.key}
+            checked={item.completed}
+            onPress={() => toggleTask(item.key)}
+            checkedColor="#6f8466"
+            containerStyle={styles.checkboxContainer}
+          />
 
           <View style={styles.taskTextWrap}>
             <Text
@@ -130,12 +130,12 @@ const addTask = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrap}>
-<FlatList
-  data={filteredTasks}
-  renderItem={renderItem}
-  keyExtractor={(item) => item.key}
-  extraData={tasks}
-  contentContainerStyle={styles.listContent}
+        <FlatList
+          data={filteredTasks}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          extraData={tasks}
+          contentContainerStyle={styles.listContent}
           ListHeaderComponent={
             <>
               <View style={styles.brandRow}>
