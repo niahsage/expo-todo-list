@@ -76,48 +76,48 @@ export default function App() {
     return tasks;
   }, [tasks, filter]);
 
-const renderItem = ({ item }) => {
-  return (
-    <View style={styles.taskCard}>
-      <CheckBox
-        title={item.description}
-        checked={item.completed}
-        onPress={() => toggleTask(item.key)}
-        checkedColor="#6f8466"
-        uncheckedColor="#b8b8b8"
-        containerStyle={styles.taskCheckRow}
-        textStyle={[
-          styles.taskText,
-          item.completed && styles.completedTaskText,
-        ]}
-      />
-
-      <View style={styles.pillRow}>
-        <View style={styles.datePill}>
-          <Text style={styles.pillText}>📅 {item.date}</Text>
-        </View>
-
-        <View
-          style={[
-            styles.statusPill,
-            item.completed ? styles.completedPill : styles.activePill,
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.taskCard}>
+        <CheckBox
+          title={item.description}
+          checked={item.completed}
+          onPress={() => toggleTask(item.key)}
+          checkedColor="#6f8466"
+          uncheckedColor="#b8b8b8"
+          containerStyle={styles.taskCheckRow}
+          textStyle={[
+            styles.taskText,
+            item.completed && styles.completedTaskText,
           ]}
-        >
-          <Text
+        />
+
+        <View style={styles.pillRow}>
+          <View style={styles.datePill}>
+            <Text style={styles.pillText}>📅 {item.date}</Text>
+          </View>
+
+          <View
             style={[
-              styles.pillText,
-              item.completed
-                ? styles.completedPillText
-                : styles.activePillText,
+              styles.statusPill,
+              item.completed ? styles.completedPill : styles.activePill,
             ]}
           >
-            {item.completed ? '✓ Completed' : 'Active'}
-          </Text>
+            <Text
+              style={[
+                styles.pillText,
+                item.completed
+                  ? styles.completedPillText
+                  : styles.activePillText,
+              ]}
+            >
+              {item.completed ? '✓ Completed' : 'Active'}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -307,17 +307,16 @@ const styles = StyleSheet.create({
     borderColor: '#e7dacb',
   },
   taskCheckRow: {
-  padding: 0,
-  margin: 0,
-  marginBottom: 12,
-  backgroundColor: 'transparent',
-  borderWidth: 0,
-},
+    padding: 0,
+    margin: 0,
+    marginBottom: 12,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+  },
   taskText: {
     fontSize: 18,
     fontWeight: '700',
     color: '#342922',
-    marginBottom: 12,
   },
   completedTaskText: {
     textDecorationLine: 'line-through',
@@ -328,6 +327,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
+    marginLeft: 40,
   },
   datePill: {
     backgroundColor: '#f7e6df',
