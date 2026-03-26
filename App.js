@@ -79,13 +79,14 @@ const addTask = () => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.taskCard}>
-        <View style={styles.taskTopRow} pointerEvents="box-none">
-          <CheckBox
-            checked={item.completed}
-            onPress={() => toggleTask(item.key)}
-            checkedColor="#6f8466"
-            containerStyle={styles.checkboxContainer}
-          />
+        <View style={styles.taskTopRow} 
+<CheckBox
+  key={item.key}
+  checked={item.completed}
+  onPress={() => toggleTask(item.key)}
+  checkedColor="#6f8466"
+  containerStyle={styles.checkboxContainer}
+/>
 
           <View style={styles.taskTextWrap}>
             <Text
@@ -129,11 +130,12 @@ const addTask = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrap}>
-        <FlatList
-          data={filteredTasks}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.key}
-          contentContainerStyle={styles.listContent}
+<FlatList
+  data={filteredTasks}
+  renderItem={renderItem}
+  keyExtractor={(item) => item.key}
+  extraData={tasks}
+  contentContainerStyle={styles.listContent}
           ListHeaderComponent={
             <>
               <View style={styles.brandRow}>
