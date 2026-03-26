@@ -76,56 +76,48 @@ export default function App() {
     return tasks;
   }, [tasks, filter]);
 
-  const renderItem = ({ item }) => {
-    return (
-      <View style={styles.taskCard}>
-        <View style={styles.taskTopRow}>
-          <CheckBox
-            key={item.key}
-            checked={item.completed}
-            onPress={() => toggleTask(item.key)}
-            checkedColor="#6f8466"
-            containerStyle={styles.checkboxContainer}
-          />
+const renderItem = ({ item }) => {
+  return (
+    <View style={styles.taskCard}>
+      <CheckBox
+        title={item.description}
+        checked={item.completed}
+        onPress={() => toggleTask(item.key)}
+        checkedColor="#6f8466"
+        uncheckedColor="#b8b8b8"
+        containerStyle={styles.taskCheckRow}
+        textStyle={[
+          styles.taskText,
+          item.completed && styles.completedTaskText,
+        ]}
+      />
 
-          <View style={styles.taskTextWrap}>
-            <Text
-              style={[
-                styles.taskText,
-                item.completed && styles.completedTaskText,
-              ]}
-            >
-              {item.description}
-            </Text>
+      <View style={styles.pillRow}>
+        <View style={styles.datePill}>
+          <Text style={styles.pillText}>📅 {item.date}</Text>
+        </View>
 
-            <View style={styles.pillRow}>
-              <View style={styles.datePill}>
-                <Text style={styles.pillText}>📅 {item.date}</Text>
-              </View>
-
-              <View
-                style={[
-                  styles.statusPill,
-                  item.completed ? styles.completedPill : styles.activePill,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.pillText,
-                    item.completed
-                      ? styles.completedPillText
-                      : styles.activePillText,
-                  ]}
-                >
-                  {item.completed ? '✓ Completed' : 'Active'}
-                </Text>
-              </View>
-            </View>
-          </View>
+        <View
+          style={[
+            styles.statusPill,
+            item.completed ? styles.completedPill : styles.activePill,
+          ]}
+        >
+          <Text
+            style={[
+              styles.pillText,
+              item.completed
+                ? styles.completedPillText
+                : styles.activePillText,
+            ]}
+          >
+            {item.completed ? '✓ Completed' : 'Active'}
+          </Text>
         </View>
       </View>
-    );
-  };
+    </View>
+  );
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -314,22 +306,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e7dacb',
   },
-  taskTopRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  checkboxContainer: {
-    padding: 0,
-    margin: 0,
-    marginRight: 10,
-    marginTop: 1,
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-  },
-  taskTextWrap: {
-    flex: 1,
-    paddingTop: 2,
-  },
+  taskCheckRow: {
+  padding: 0,
+  margin: 0,
+  marginBottom: 12,
+  backgroundColor: 'transparent',
+  borderWidth: 0,
+},
   taskText: {
     fontSize: 18,
     fontWeight: '700',
